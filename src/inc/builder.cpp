@@ -21,10 +21,6 @@ std::string get_dvdinfo(const std::map<std::string, std::any>& dvdinfo_data) {
 
 	std::map<std::string, std::any> data = dvdinfo_data;
 
-	for (const auto& [key, value] : data) {
-		std::cout << key << " : " << value.type().name() << "\n";
-	}
-
 	std::map<std::string, std::any> dvdinfo_data_video = std::any_cast<std::map<std::string, std::any>>(data["video"]);
 
 	std::ostringstream oss;
