@@ -1,11 +1,16 @@
 #include <iostream>
 #include <cstdint>
+#include <string>
 #include <vector>
 
 #include "inc/version.hpp"
 #include "inc/builder.hpp"
+#include "inc/dvdinfolib.hpp"
 
 int main() {
+	std::cout << GetDiscTitle("VIDEO_TS.IFO") << "\n\n";
+	
+	
 	std::map<std::string, std::any> dvdinfo_data;
 	dvdinfo_data["disc_label"] = std::string("Alice");
 	dvdinfo_data["disc_title"] = std::string("Alice");
