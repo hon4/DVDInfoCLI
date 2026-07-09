@@ -10,9 +10,10 @@
 
 #include "version.hpp"
 #include "format_number.hpp"
+#include "pad_str.hpp"
 
-std::string get_dvdinfo_video_info();
-std::string get_dvdinfo_audio_info();
+std::string get_dvdinfo_video_info(const std::vector<std::map<std::string, std::any>>& video_tracks);
+std::string get_dvdinfo_audio_info(const std::vector<std::map<std::string, std::any>>& audio_tracks);
 std::string get_movie_video_files_str(const std::vector<std::string>& files);
 
 std::string get_dvdinfo(const std::map<std::string, std::any>& dvdinfo_data) {
@@ -44,30 +45,53 @@ std::string get_dvdinfo(const std::map<std::string, std::any>& dvdinfo_data) {
 		<< "VIDEO" << "\n"
 		<< "Codec    BitRate          Description\n"
 		<< "-----    -------          -----------\n"
-		<< get_dvdinfo_video_info() << "\n"
+		<< get_dvdinfo_video_info(std::any_cast<std::vector<std::map<std::string, std::any>>>(data["video_tracks"])) << "\n"
 		<< "\n"
 		<< "AUDIO\n"
 		<< "Codec    Language    Bitrate    Description\n"
 		<< "-----    --------    -------    -----------\n"
-		<< get_dvdinfo_audio_info() << "\n";
+		<< get_dvdinfo_audio_info(std::any_cast<std::vector<std::map<std::string, std::any>>>(data["audio_tracks"])) << "\n";
 
 	ret = oss.str();
 
 	return ret;
 }
 
-std::string get_dvdinfo_video_info() {
-	return "MPEG-2   6000 kbps (avg)  576p / 25.000 FPS / 16:9 / Main Profile";
+std::string get_dvdinfo_video_info(const std::vector<std::map<std::string, std::any>>& video_tracks) {
+	std::string ret;
+
+	for (size_t i = 0; i < video_tracks.size(); i++) {
+		if (i > 0)
+			ret += '\n';
+
+		ret += pad_str_right(std::any_cast<std::string>(video_tracks[i].at("codec")), 9);
+		ret += pad_str_right(std::any_cast<std::string>(video_tracks[i].at("bitrate")),17);
+		ret += std::any_cast<std::string>(video_tracks[i].at("description"));
+	}
+
+	return ret;
 }
 
-std::string get_dvdinfo_audio_info() {
-	return "AC-3     Greek       448 kbps   5.1 / 48.0 kHz / Dolby Digital";
+std::string get_dvdinfo_audio_info(const std::vector<std::map<std::string, std::any>>& audio_tracks) {
+	std::string ret;
+
+	for (size_t i = 0; i < audio_tracks.size(); i++) {
+		if (i > 0)
+			ret += '\n';
+
+		ret += pad_str_right(std::any_cast<std::string>(audio_tracks[i].at("codec")), 9);
+		ret += pad_str_right(std::any_cast<std::string>(audio_tracks[i].at("language")),12);
+		ret += pad_str_right(std::string(std::to_string(std::any_cast<std::uint32_t>(audio_tracks[i].at("bitrate"))) + " kbps"),11);
+		ret += std::any_cast<std::string>(audio_tracks[i].at("description"));
+	}
+
+	return ret;
 }
 
 std::string get_movie_video_files_str(const std::vector<std::string>& files) {
 	std::string ret;
 
-	for (size_t i = 0; i < files.size(); ++i) {
+	for (size_t i = 0; i < files.size(); i++) {
 		if (i > 0)
 			ret += ", ";
 

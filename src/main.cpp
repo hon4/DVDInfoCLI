@@ -11,6 +11,7 @@ int main() {
 	dvdinfo_data["disc_title"] = std::string("Alice");
 	dvdinfo_data["disc_size"] = std::uint64_t{5};
 
+	//DVDInfo Movie Info
 	std::map<std::string, std::any> dvdinfo_video;
 	dvdinfo_video["parts"] = std::uint32_t{5};
 	std::vector<std::string> video_files_arr = {
@@ -25,6 +26,31 @@ int main() {
 	dvdinfo_video["standard"] = std::string("PAL");
 
 	dvdinfo_data["video"] = dvdinfo_video;
+	
+	//DVDInfo Video Tracks
+	std::vector<std::map<std::string, std::any>> video_tracks;
+	
+	std::map<std::string, std::any> vtrack0;
+	vtrack0["codec"] = std::string("x264");
+	vtrack0["bitrate"] = std::string("6000 kbps (avg)");
+	vtrack0["description"] = std::string("576p / 25.000 FPS / 16:9 / Main Profile");
+	
+	video_tracks.push_back(vtrack0);
+	
+	dvdinfo_data["video_tracks"] = video_tracks;
+	
+	//DVDInfo Audio Tracks
+	std::vector<std::map<std::string, std::any>> audio_tracks;
+	
+	std::map<std::string, std::any> atrack0;
+	atrack0["codec"] = std::string("AC-3");
+	atrack0["language"] = std::string("Greek");
+	atrack0["bitrate"] = std::uint32_t{448};
+	atrack0["description"] = std::string("5.1 / 48.0 kHz / Dolby Digital");
+	
+	audio_tracks.push_back(atrack0);
+	
+	dvdinfo_data["audio_tracks"] = audio_tracks;
 
 	std::cout << get_dvdinfo(dvdinfo_data);
 	return 0;
