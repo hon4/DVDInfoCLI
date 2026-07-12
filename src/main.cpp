@@ -4,10 +4,11 @@
 #include <vector>
 
 #include "inc/version.hpp"
+#include "inc/help.hpp"
 #include "inc/builder.hpp"
 #include "inc/dvdinfolib.hpp"
 
-int main() {
+int main(int argv, char* argv[]) {
 	std::cout << GetDiscTitle("VIDEO_TS.IFO") << "\n\n";
 	
 	
