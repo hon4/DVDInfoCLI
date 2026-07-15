@@ -5,4 +5,5 @@ dvdinfo_SOURCES = \
 	inc/builder.cpp \
 	inc/pad_str.cpp \
 	inc/dvdinfolib.cpp \
-	inc/help.cpp
+	inc/help.cpp \
+	inc/find_dvd_path.cpp

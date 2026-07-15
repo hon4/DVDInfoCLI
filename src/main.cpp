@@ -7,8 +7,39 @@
 #include "inc/help.hpp"
 #include "inc/builder.hpp"
 #include "inc/dvdinfolib.hpp"
+#include "inc/find_dvd_path.hpp"
 
-int main(int argv, char* argv[]) {
+void test();
+std::string dvdpath;
+
+int main(int argc, char* argv[]) {
+	if (argc == 1) {
+		std::cout << "DVDInfo: No input file specified.\n\n";
+		return 0;
+	}
+
+	for (int i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "-h") == 0) {
+			show_help();
+			return 0;
+		} else if (strcmp(argv[i], "-v") == 0) {
+			show_ver();
+			return 0;
+		} else {
+			
+		}
+    }
+
+	std::cout << "0: " << find_dvd_path("/mnt/cdrom/VIDEO_TS/") << "\n";
+	std::cout << "1: " << find_dvd_path("/mnt/cdrom/VIDEO_TS") << "\n";
+	std::cout << "2: " << find_dvd_path("/mnt/cdrom/VIDEO_TS/VIDEO_TS.IFO") << "\n";
+	std::cout << "3: " << find_dvd_path("/mnt/cdrom/VIDEO_TS/VIDEO_TS.VOB") << "\n";
+	//test();
+
+	return 0;
+}
+
+void test() {
 	std::cout << GetDiscTitle("VIDEO_TS.IFO") << "\n\n";
 	
 	
@@ -59,5 +90,4 @@ int main(int argv, char* argv[]) {
 	dvdinfo_data["audio_tracks"] = audio_tracks;
 
 	std::cout << get_dvdinfo(dvdinfo_data);
-	return 0;
 }
