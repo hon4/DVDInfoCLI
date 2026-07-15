@@ -26,7 +26,8 @@ int main(int argc, char* argv[]) {
 			show_ver();
 			return 0;
 		} else {
-			
+			dvdpath = find_dvd_path(std::string(argv[i]));
+			//Add checks
 		}
     }
 
