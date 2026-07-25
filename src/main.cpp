@@ -14,7 +14,7 @@ std::string dvdpath;
 
 int main(int argc, char* argv[]) {
 	if (argc == 1) {
-		std::cout << "DVDInfo: No input file specified.\n\n";
+		std::cout << "DVDInfo: No input file specified.\nType -h to show help.\n\n";
 		return 0;
 	}
 

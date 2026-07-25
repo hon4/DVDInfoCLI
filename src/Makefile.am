@@ -6,4 +6,5 @@ dvdinfo_SOURCES = \
 	inc/pad_str.cpp \
 	inc/dvdinfolib.cpp \
 	inc/help.cpp \
-	inc/find_dvd_path.cpp
+	inc/find_dvd_path.cpp \
+	inc/get_disc_title.cpp
