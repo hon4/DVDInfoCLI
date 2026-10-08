@@ -8,3 +8,5 @@ dvdinfo_SOURCES = \
 	inc/help.cpp \
 	inc/find_dvd_path.cpp \
 	inc/get_disc_title.cpp
+
+dvdinfo_LDADD = -lblkid
