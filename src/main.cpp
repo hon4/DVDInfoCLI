@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 #include "inc/version.hpp"
 #include "inc/help.hpp"
@@ -9,12 +10,10 @@
 #include "inc/dvdinfolib.hpp"
 #include "inc/find_dvd_path.hpp"
 
-void test();
+void mkDVDInfo(const std::string dvd_path);
 std::string dvdpath;
 
 int main(int argc, char* argv[]) {
-	std::cout << GetDiscLabel("/dev/sr0") << std::endl;
-	std::cout << GetDiscLabel("/root/DVDInfoCLI") << std::endl;
 	if (argc == 1) {
 		std::cout << "DVDInfo: No input file specified.\nType -h to show help.\n\n";
 		return 0;
@@ -32,22 +31,23 @@ int main(int argc, char* argv[]) {
 			//Add checks
 		}
     }
-
-	//std::cout << "0: " << find_dvd_path("/mnt/cdrom/VIDEO_TS/") << "\n";
-	//std::cout << "1: " << find_dvd_path("/mnt/cdrom/VIDEO_TS") << "\n";
-	//std::cout << "2: " << find_dvd_path("/mnt/cdrom/VIDEO_TS/VIDEO_TS.IFO") << "\n";
-	//std::cout << "3: " << find_dvd_path("/mnt/cdrom/VIDEO_TS/VIDEO_TS.VOB") << "\n";
-	//test();
+	
+	mkDVDInfo(dvdpath);
 
 	return 0;
 }
 
-void test() {
+void mkDVDInfo(const std::string dvd_path) {
+	std::string video_ts_path = dvd_path + "/VIDEO_TS";
+
 
 	std::map<std::string, std::any> dvdinfo_data;
-	dvdinfo_data["disc_label"] = std::string("Alice");
-	dvdinfo_data["disc_title"] = GetDiscTitle("VIDEO_TS.IFO");
-	dvdinfo_data["disc_size"] = std::uint64_t{5};
+	dvdinfo_data["disc_label"] = GetDiscLabel(dvd_path);
+	std::cout << "aa";
+	dvdinfo_data["disc_title"] = GetDiscTitle(video_ts_path + "VIDEO_TS.IFO");
+	std::cout << "bb";
+	dvdinfo_data["disc_size"] = GetDirectorySize(dvd_path);
+	std::cout << "cc";
 
 	//DVDInfo Movie Info
 	std::map<std::string, std::any> dvdinfo_video;
